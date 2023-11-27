@@ -13,31 +13,20 @@ import {
   faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import styles from './tabNavStyle';
 
 const Tab = createBottomTabNavigator();
 
 const CustomTabbar = ({state, descriptors, navigation}) => {
-  console.log(state.index);
   const icons = [faHome, faBars, faHeart, faEllipsisV];
 
   return (
-    <View
-      style={{
-        height: 70,
-        borderRadius: 40,
-        position: 'absolute',
-        zIndex: 10,
-        bottom: 5,
-        width: '100%',
-        left: 0,
-        backgroundColor: 'rgba(255,255,255,0.1)',
-      }}>
+    <View style={styles.tabbarWrapper}>
       <View style={{flexDirection: 'row'}}>
         {state.routes.map((route, index) => {
           const {options} = descriptors[route.key];
           const label = route.name;
           console.log(state, 'options');
-          const isTransparent = index === 0; // Make the second tab transparent
           const isCurrentTabFocused = state.index === index; // Check if the tab is focused
 
           if (isCurrentTabFocused) {
@@ -61,17 +50,7 @@ const CustomTabbar = ({state, descriptors, navigation}) => {
                   backgroundColor: theme.greyLight,
                   borderRadius: 60,
                 }}>
-                <View
-                  style={{
-                    position: 'absolute',
-                    backgroundColor: 'black',
-                    bottom: 30,
-                    height: 60,
-                    width: 60,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: 40,
-                  }}>
+                <View style={styles.iconWrapper}>
                   <FontAwesomeIcon
                     icon={icons[index]}
                     size={24}
@@ -164,18 +143,7 @@ const CustomTabNavigator = () => {
 const TabIcon = ({title, focused, icon}) => {
   if (focused) {
     return (
-      <View
-        style={{
-          position: 'absolute',
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 60,
-          width: 60,
-          backgroundColor: 'black',
-          borderRadius: 60,
-          bottom: 40,
-        }}>
+      <View style={styles.iconWrapper}>
         <FontAwesomeIcon
           icon={icon || faHome}
           size={24}
@@ -185,12 +153,7 @@ const TabIcon = ({title, focused, icon}) => {
     );
   }
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+    <View style={styles.justifyCenter}>
       <FontAwesomeIcon icon={icon || faHome} size={24} />
       <Text style={{fontSize: 12}}>{title}</Text>
     </View>
